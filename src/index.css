@@ -4,7 +4,7 @@
 
 .hero-section {
   @apply relative min-h-screen flex items-center justify-center overflow-hidden;
-  background: url('/divertidamente.jpg') center/cover no-repeat;
+  background: url('/hero-background.jpg') center/cover no-repeat;
 }
 
 .hero-section::before {
@@ -190,4 +190,4 @@
 
 .back-to-top:hover svg {
   @apply -translate-y-1;
-} 
+}

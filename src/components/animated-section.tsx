@@ -22,4 +22,4 @@ export function AnimatedSection({ id, title, children, delay = 0 }: AnimatedSect
       </div>
     </section>
   )
-} 
+}

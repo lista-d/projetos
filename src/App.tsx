@@ -1,10 +1,8 @@
-'use client'
-
 import { ArrowUp } from 'lucide-react'
 import { Navigation } from './components/navigation'
 import { AnimatedSection } from './components/animated-section'
 
-export default function Home() {
+export default function App() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-amber-50 to-amber-100">
       {/* Hero Section */}
@@ -67,4 +65,4 @@ export default function Home() {
       </a>
     </main>
   )
-} 
+}
