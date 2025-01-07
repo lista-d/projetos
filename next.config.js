@@ -13,15 +13,7 @@ const nextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: false,
-  },
-  // Ensure Tailwind styles are properly included in the build
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader', 'postcss-loader'],
-    });
-    return config;
-  },
+  }
 }
 
 module.exports = nextConfig 
