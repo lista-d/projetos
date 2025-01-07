@@ -16,6 +16,8 @@ concurrency:
 
 env:
   NODE_ENV: production
+  NEXT_TELEMETRY_DISABLED: 1
+  NEXT_PUBLIC_BASE_PATH: /projetos
 
 jobs:
   build:
@@ -30,70 +32,15 @@ jobs:
           node-version: "20"
           cache: 'npm'
 
-      - name: Cache Next.js build
-        uses: actions/cache@v4
-        with:
-          path: |
-            .next/cache
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-            ${{ runner.os }}-nextjs-
-          
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
       - name: Install dependencies
-        run: |
-          npm install -g npm@latest
-          npm ci
-          npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
-          npm install -D @types/node @types/react @types/react-dom typescript
-          npm install -D @tailwindcss/forms @tailwindcss/typography
-          npm list tailwindcss postcss autoprefixer
+        run: npm ci
           
-      - name: Setup Tailwind
-        run: |
-          cat > tailwind.config.ts << 'EOL'
-          import type { Config } from 'tailwindcss'
-          const config: Config = {
-            content: [
-              './pages/**/*.{js,ts,jsx,tsx,mdx}',
-              './components/**/*.{js,ts,jsx,tsx,mdx}',
-              './app/**/*.{js,ts,jsx,tsx,mdx}',
-            ],
-            theme: {
-              extend: {},
-            },
-            plugins: [],
-          }
-          export default config
-          EOL
-          cat > postcss.config.js << 'EOL'
-          module.exports = {
-            plugins: {
-              tailwindcss: {},
-              autoprefixer: {},
-            },
-          }
-          EOL
-          cat > app/globals.css << 'EOL'
-          @tailwind base;
-          @tailwind components;
-          @tailwind utilities;
-          EOL
-          
-      - name: Build CSS
-        run: npx tailwindcss -o ./app/globals.css --minify
-        
       - name: Build with Next.js
         run: npm run build
-        env:
-          NODE_ENV: production
-          NEXT_PUBLIC_BASE_PATH: /projetos
-          NEXT_TELEMETRY_DISABLED: 1
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
